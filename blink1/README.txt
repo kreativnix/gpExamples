@@ -11,8 +11,8 @@
      Language: C
      Compiler: AVR Tool-Chain, MPLAB XC8
   
-     Version:  1.2
-     Date:     2020-01-18
+     Version:  1.x
+     Date:     2020-01-19
      Author:   Ing. G. Pechoc
   
      License: (CC BY-NC-SA 4.0)
@@ -31,7 +31,8 @@
        if choosen AVR maybe there is a warning about a second definition.
        It can be ignored, or you comment this line out.
 
-    #define  ATtiny861    // ATtiny85 | ATtiny841 | ATtiny861 | PIC16F18877
+    #define  ATtiny861    // ATtiny85 | ATtiny817 | ATtiny841 | ATtiny861 | 
+                          // PIC16F18877
        Choose the right hardware. If yours is not in the list then look in 
        the data sheet for a valid Port number for PORTB and change a line 
        in the PORT definitions.
