@@ -13,7 +13,7 @@
      Language: C
      Compiler: AVR Tool-Chain, MPLAB XC8
   
-     Version:  1.4
+     Version:  1.5
      Date:     2020-01-19
      Author:   Ing. G. Pechoc
   
@@ -30,23 +30,31 @@
      1.1      2020-01-17       Changes after Test with PIC
      1.2      2020-01-18       Enhanced documentation
      1.3      2020-01-18       Corrections for PIC16F18877
-     1.4
+     1.5      2020-01-19       Added support for ATtiny817 (Xplained)
   
 ***********************************************************************
 
 */
 
-//
-// Choose MCU series, target type and delay in ms if wanted
-//
-#define PIC            // AVR | PIC
-#define PIC16F18877  // ATtiny85 | ATtiny817 | ATtiny841 | ATtiny861 | PIC16F18877
+/* ********************************************************************
+
+   Choose MCU series, target type and delay in ms if wanted
+   or comment out DELAY to get maximum possible frequency.
+
+*/ 
+//#define AVR            // AVR | PIC
+#define ATtiny817  // ATtiny85 | ATtiny817 | ATtiny841 | ATtiny861 | PIC16F18877
 #define DELAY 10
+/*
+******************************************************end params***** */
+
 
 // define clock for wait function
-#ifdef AVR
+#if defined(ATtiny817) 
+#define F_CPU 3333333
+#elif defined(ATtiny85) ||  definedATtiny841) || defined(ATtiny861) 
 #define F_CPU 1000000UL
-#endif
+#endif 
 #ifdef PIC
 #define _XTAL_FREQ 4000000
 #endif
@@ -70,6 +78,7 @@
     So please never connect a LED without a series resistor!!!
     It depends on the supply voltage and the capability of the output pin
     but 470 Ohms is a good guess.
+
 */
 #ifdef ATtiny85
 #define LED_PORT PB2    // pin 7
@@ -95,7 +104,7 @@ int main(void) {
     // The DDRB is the data direction for port B.
 #if defined(ATtiny817) 
     PORTC.DIR |= (1 << LED_PORT);
-#elif defined(ATtiny85) ||  defined(ATtiny841) || defined(ATtiny861) 
+#elif defined(ATtiny85) ||  definedATtiny841) || defined(ATtiny861) 
     DDRB |= (1 << LED_PORT);
     //DDRB = 0x80;
 #endif 
@@ -115,7 +124,7 @@ int main(void) {
         // Set the LED bit to "1" - LED will be "on".
 #if defined(ATtiny817) 
     PORTC.OUT = 0x01;
-#elif defined(ATtiny85) ||  defined(ATtiny841) || defined(ATtiny861) 
+#elif defined(ATtiny85) ||  definedATtiny841) || defined(ATtiny861) 
     DDRB |= (1 << LED_PORT);
 #endif    
 #ifdef PIC
@@ -137,7 +146,7 @@ int main(void) {
         // Set the LED bit to "0" - LED will be "off".
 #if defined(ATtiny817) 
     PORTC.OUT = 0x00;
-#elif defined(ATtiny85) ||  defined(ATtiny841) || defined(ATtiny861) 
+#elif defined(ATtiny85) ||  definedATtiny841) || defined(ATtiny861) 
     PORTB &= ~(1 << LED_PORT);
 #endif    
 #ifdef PIC
